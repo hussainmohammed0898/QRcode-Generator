@@ -5,13 +5,31 @@ import fs from 'fs';
 inquirer
   .prompt([
     {
-      message: "Enter any URL",
-      name: "URL",
+      message: "Enter your name",
+      name: "name",
+    },
+    {
+      message: "Enter your age",
+      name: "age",
+    },
+    {
+      message: "Enter your occupation",
+      name: "occupation",
+    },
+    {
+      message: "Enter your email",
+      name: "email",
     },
   ])
   .then((answers) => {
-    const url = answers.URL;
-    var qr_svg = qr.image(url, { type: 'png' });
+    const biodata = {
+      name: answers.name,
+      age: answers.age,
+      occupation: answers.occupation,
+      email: answers.email,
+    };
+    const biodataString = JSON.stringify(biodata, null, 2); // Convert biodata to a formatted string
+    var qr_svg = qr.image(biodataString, { type: 'png' });
     qr_svg.pipe(fs.createWriteStream('QRCode.png'));
     console.log("QR code generated and saved as 'QRCode.png'");
   })
